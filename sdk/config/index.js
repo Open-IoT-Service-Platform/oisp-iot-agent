@@ -24,8 +24,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 var fs = require('fs'),
     path = require('path'),
-    localConf = "./global.json";
-
+    localConf = "./global.json",
+    logger = require('../lib/logger');
 var config = {};
 
 if (fs.existsSync(path.join(__dirname, localConf))) {
