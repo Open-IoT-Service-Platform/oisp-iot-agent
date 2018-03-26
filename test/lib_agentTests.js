@@ -24,7 +24,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 process.env.NODE_ENV = 'test';
-var assert = require('chai').assert,
+var assert = require('assert'),
     sinon = require('sinon'),
     rewire = require('rewire'),
     utils = require("../lib/utils").init(),
