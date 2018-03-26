@@ -24,8 +24,16 @@
 
 var path = require('path'),
     assert =  require('chai').assert,
-    rewire = require('rewire');
+    rewire = require('rewire'),
+    sinon = require('sinon'),
+    rewire = require('rewire'),
+    fs = require('fs'),
+    path = require('path');
+
 var fileToTest = "../lib/sensors-store.js";
+var commonTest = rewire("../lib/common.js");
+var sinonTestFactory = require('sinon-test');
+var sinonTest = sinonTestFactory(sinon);
 
 describe(fileToTest, function() {
     var logger = {
@@ -249,4 +257,121 @@ describe(fileToTest, function() {
             done();
         });
     });
+});
+
+
+describe("../lib/common.js", function() {
+    var test_name = 'thisname';
+    var test_data = {
+        "number": 10,
+        "name": "testname",
+    };
+    var fakepath = {
+        resolve: function() {
+            return 'path'
+        },
+        normalize: function() {
+            return 'path'
+        }
+    }
+    var fakefs = {
+        existsSync: function(filename) {
+            if (filename == 'thisname') return true;
+            else return false;
+        },
+        readFileSync: function(filename) {
+            return '{"name": "testname"}';
+        },
+        writeFileSync: function(filename, data) {
+            return false;
+        }
+    };
+    it('Shall write to JSON file', sinonTest(function(done) {
+        var writefilesync = this.stub(fs, 'writeFileSync');
+        var result = commonTest.writeToJson(test_name,
+            test_data);
+        assert.equal(result, false, 'the file should');
+        assert(writefilesync.calledOnce,
+            'writefilesync called times error')
+        done();
+    }));
+
+    it('Shall read file to JSON', sinonTest(function(done) {
+        commonTest.__set__('fs', fakefs);
+        var result = commonTest.readFileToJson(test_name);
+        assert(result, 'file hasnot read');
+        result = commonTest.readFileToJson('');
+        assert.equal(result, null, 'should read null');
+        done();
+    }));
+
+    it('Shall get file from data directory', sinonTest(function(done) {
+        var result = commonTest.getFileFromDataDirectory(
+            test_name);
+        assert.equal(result, path.resolve(__dirname, "..",
+            "./data/", test_name), 'error path');
+        done();
+    }));
+
+
+    it('Shall get device config name', sinonTest(function(done) {
+        fakefs.existsSync = function(filename) {
+            if (filename == path.resolve(__dirname, "..", "./data/device.json")) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+        commonTest.__set__('fs', fakefs);
+        var result = commonTest.getDeviceConfigName();
+        assert.equal(result, path.resolve(__dirname, "..",
+            "./data/device.json"), 'error path');
+        fakefs.existsSync = function(filename) {
+            if (filename == path.resolve(__dirname, "../lib/data/device.json")) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+        result = commonTest.getDeviceConfigName();
+        assert.equal(result, path.resolve(__dirname, "../lib/data/device.json"), 'should get null');
+        done();
+    }));
+
+    it('Shall initialize data directory', sinonTest(function(done) {
+        var writefilesync = this.spy(fakefs,
+            'writeFileSync');
+        fakefs.existsSync = function(fileName) {
+            return true;
+        }
+        commonTest.__set__('fs', fakefs);
+        commonTest.__set__('path', fakepath);
+        commonTest.initializeDataDirectory();
+        assert.equal(writefilesync.callCount, 1,
+            'called times error');
+        done();
+    }));
+
+    it('Shall save to user config', sinonTest(function(done) {
+        fakefs.appendFileSync = function(fileName) {};
+        var appendfilesync = this.spy(fakefs,
+            'appendFileSync');
+        commonTest.__set__('fs', fakefs);
+        commonTest.saveToUserConfig();
+        assert.equal(appendfilesync.callCount, 1,
+            'called times error');
+        done();
+    }));
+
+    it('Shall save to config', sinonTest(function(done) {
+        commonTest.__set__('fs', fakefs);
+        var writefilesync = this.spy(fakefs,
+            'writeFileSync');
+        commonTest.saveToConfig(test_name, 'name', 'name1');
+        commonTest.saveToGlobalConfig('name', 'name2');
+        commonTest.saveToDeviceConfig('name', 'name3');
+        assert.equal(writefilesync.callCount, 3,
+            'called times error');
+        done();
+    }));
 });
