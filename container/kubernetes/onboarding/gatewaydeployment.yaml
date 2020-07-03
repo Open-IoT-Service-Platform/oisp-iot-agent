@@ -1,0 +1,64 @@
+version: <DEPLOYMENT_YAML_VERSION_NUMBER>
+namespace: <NAMESPACE_FOR_ALL_DEPLOYMENTS>
+CreateDeployments:
+  - ApplicationName: <DEPLOYMENT_NAME>
+    NodeName: <K3S_NODE_NAME>
+    ToolVersion: <TOOL_VERSION>
+    DeploymentConfig:
+        URL: <DEPLOYMENT_GIT_CONFIG_URL>
+        Directory: <DEPLOYMENT_CONFIG_GIT_DIRECTORY_NAME>
+        GitTag: <DEPLOYMENT_GIT_TAG_OR_COMMITID_OR_BRANCH>
+    MachineConfig:
+        URL: <MACHINE_GIT_CONFIG_URL>,
+        Directory: <MACHINE_CONFIG_GIT_DIRECTORY_NAME>,
+        GitTag: <MACHINE_CONFIG_TAG_OR_COMMITID_OR_BRANCH>
+
+  - ApplicationName: <DEPLOYMENT_NAME>
+    NodeName: <K3S_NODE_NAME>
+    ToolVersion: <TOOL_VERSION>
+    DeploymentConfig:
+        URL: <DEPLOYMENT_GIT_CONFIG_URL>
+        Directory: <DEPLOYMENT_CONFIG_GIT_DIRECTORY_NAME>
+        GitTag: <DEPLOYMENT_GIT_TAG_OR_COMMITID_OR_BRANCH>
+
+UpdateDeployments:
+  - ApplicationName: <DEPLOYMENT_NAME>
+    NodeName: <K3S_NODE_NAME>
+    ToolVersion: <TOOL_VERSION>
+    DeploymentConfig:
+        URL: <DEPLOYMENT_GIT_CONFIG_URL>
+        Directory: <DEPLOYMENT_CONFIG_GIT_DIRECTORY_NAME>
+        GitTag: <DEPLOYMENT_GIT_TAG_OR_COMMITID_OR_BRANCH>
+    MachineConfig:
+        URL: <MACHINE_GIT_CONFIG_URL>,
+        Directory: <MACHINE_CONFIG_GIT_DIRECTORY_NAME>,
+        GitTag: <MACHINE_CONFIG_TAG_OR_COMMITID_OR_BRANCH>
+
+  - ApplicationName: <DEPLOYMENT_NAME>
+    NodeName: <K3S_NODE_NAME>
+    ToolVersion: <TOOL_VERSION>
+    DeploymentConfig:
+        URL: <DEPLOYMENT_GIT_CONFIG_URL>
+        Directory: <DEPLOYMENT_CONFIG_GIT_DIRECTORY_NAME>
+        GitTag: <DEPLOYMENT_GIT_TAG_OR_COMMITID_OR_BRANCH>
+
+DeleteDeployments:
+  - ApplicationName: <DEPLOYMENT_NAME>
+    NodeName: <K3S_NODE_NAME>
+    ToolVersion: <TOOL_VERSION>
+    DeploymentConfig:
+        URL: <DEPLOYMENT_GIT_CONFIG_URL>
+        Directory: <DEPLOYMENT_CONFIG_GIT_DIRECTORY_NAME>
+        GitTag: <DEPLOYMENT_GIT_TAG_OR_COMMITID_OR_BRANCH>
+    MachineConfig:
+        URL: <MACHINE_GIT_CONFIG_URL>,
+        Directory: <MACHINE_CONFIG_GIT_DIRECTORY_NAME>,
+        GitTag: <MACHINE_CONFIG_TAG_OR_COMMITID_OR_BRANCH>
+
+  - ApplicationName: <DEPLOYMENT_NAME>
+    NodeName: <K3S_NODE_NAME>
+    ToolVersion: <TOOL_VERSION>
+    DeploymentConfig:
+        URL: <DEPLOYMENT_GIT_CONFIG_URL>
+        Directory: <DEPLOYMENT_CONFIG_GIT_DIRECTORY_NAME>
+        GitTag: <DEPLOYMENT_GIT_TAG_OR_COMMITID_OR_BRANCH>
