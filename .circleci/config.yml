@@ -126,7 +126,8 @@ commands:
           command: |
             wget https://github.com/txn2/kubefwd/releases/download/1.13.0/kubefwd_amd64.deb
             sudo dpkg -i kubefwd_amd64.deb
-            sudo -E KUBECONFIG=/home/circleci/k3s/kubeconfig.yaml kubefwd svc -n oisp -l "app in (frontend, websocket-server, mqtt-server)"&
+            kubectl -n oisp label svc/emqx app=emqx
+            sudo -E KUBECONFIG=/home/circleci/k3s/kubeconfig.yaml kubefwd svc -n oisp -l "app in (frontend, websocket-server, emqx)"&
             sleep 10
             export NVM_DIR="/opt/circleci/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
@@ -146,7 +147,8 @@ commands:
           command: |
             wget https://github.com/txn2/kubefwd/releases/download/1.13.0/kubefwd_amd64.deb
             sudo dpkg -i kubefwd_amd64.deb
-            sudo -E KUBECONFIG=/home/circleci/k3s/kubeconfig.yaml kubefwd svc -n oisp -l "app in (frontend, websocket-server, mqtt-server)"&
+            kubectl -n oisp label svc/emqx app=emqx
+            sudo -E KUBECONFIG=/home/circleci/k3s/kubeconfig.yaml kubefwd svc -n oisp -l "app in (frontend, websocket-server, emqx)"&
             sleep 10
             export NVM_DIR="/opt/circleci/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
